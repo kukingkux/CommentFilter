@@ -124,7 +124,7 @@ func displayComments(commentsList *arrComments, count int) {
 	}
 }
 
-func searchComments(sourceArr *arrComments, sourceCount int, reader *bufio.Reader, resultsDisplayArr *arrComments, resultsDisplayCount *int) {
+func searchComments(sourceArr *arrComments, sourceCount int, r *bufio.Reader, resultsDisplayArr *arrComments, resultsDisplayCount *int) {
 	var input int
 	*resultsDisplayCount = 0
 
@@ -146,12 +146,12 @@ func searchComments(sourceArr *arrComments, sourceCount int, reader *bufio.Reade
 		match := false
 		switch input {
 		case 1:
-			searchTerm := getStringInput("Masukkan kata kunci: ", reader)
+			searchTerm := getStringInput("Masukkan kata kunci: ", r)
 			if strings.Contains(strings.ToLower(c.sender), strings.ToLower(searchTerm)) {
 				match = true
 			}
 		case 2:
-			searchTerm := getStringInput("Masukkan kata kunci: ", reader)
+			searchTerm := getStringInput("Masukkan kata kunci: ", r)
 			if strings.Contains(strings.ToLower(c.comments), strings.ToLower(searchTerm)) {
 				match = true
 			}
