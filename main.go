@@ -7,21 +7,24 @@ import (
 	"strings"
 )
 
-type comment struct {
-	id int
-	sender string
-	comments string
-	status int
-}
-
-const NMAX = 100000
-
 type arrComments [NMAX]comment
+type arrPKeywords [MAX_P_KEYWORDS]keywordScore
+type arrNKeywords [MAX_N_KEYWORDS]keywordScore
+type arrNegationWords [MAX_NEGATION_WORDS]string
+type arrIntensifierWords [MAX_INTENSIFIER_WORDS]modifierWord
+type arrDiminisherWords [MAX_DIMINISHER_WORDS]modifierWord
 
 func main() {
-	var data arrComments
+	var (
+		dataComments arrComments
+		dataPKeywords arrPKeywords
+		dataNKeywords arrNKeywords
+		dataNegationWords arrNegationWords
+		dataIntensifierWords arrIntensifierWords
+		dataDiminisherWords arrDiminisherWords
+	)
 
-	data = arrComments{
+	dataComments = arrComments{
 		{id: 1, sender: "Gus", comments: "Yo: Gurt", status: 0},
 		{id: 2, sender: "Gus", comments: "Mul: Yo\nYo: No 😂✌️", status: 0},
 		{id: 3, sender: "Gus", comments: "Gurt: Yo", status: 0},
@@ -33,7 +36,52 @@ func main() {
 		{id: 9, sender: "Gus", comments: "Gurt: Yo", status: 0},
 	}
 
-	fmt.Println(data)
+	dataPKeywords = arrPKeywords{
+		{word: "bagus", score: 3},
+		{word: "baik", score: 2},
+		{word: "suka", score: 4},
+		{word: "senang", score: 4},
+		{word: "luar biasa", score: 5},
+		{word: "hebat", score: 4},
+		{word: "mantap", score: 3},
+		{word: "keren", score: 3},
+	}
+
+	dataNKeywords = arrNKeywords{
+		{word: "buruk", score: -3},
+		{word: "jelek", score: -3},
+		{word: "benci", score: -4},
+		{word: "kecewa", score: -3},
+		{word: "parah", score: -5},
+		{word: "menyedihkan", score: -4},
+		{word: "masalah", score: -2},
+		{word: "tidak suka", score: -4},
+	}
+
+	dataNegationWords = arrNegationWords{
+		"tidak",
+		"bukan",
+		"jangan",
+		"tak",
+		"ngga",
+		"engga",
+		"ga",
+	}
+
+	dataIntensifierWords = arrIntensifierWords{
+		{word: "sangat", multiplier: 1.5},
+		{word: "amat", multiplier: 1.5},
+		{word: "benar-benar", multiplier: 1.7},
+		{word: "sekali", multiplier: 1.3},
+	}
+
+	dataDiminisherWords = arrDiminisherWords{
+		{word: "agak", multiplier: 0.7},
+		{word: "sedikit", multiplier: 0.6},
+		{word: "kurang", multiplier: 0.5},
+	}
+
+	fmt.Println(dataComments)
 }
 
 func mainMenu() {
