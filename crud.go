@@ -147,6 +147,7 @@ func editComment(commentsArr *arrComments, commentsCount *int, originalOrderArr 
 	}
 
 	var targetID int
+	fmt.Print("Masukkan ID komentar yang akan diedit: ")
 	fmt.Scan(&targetID)
 
 	_, targetComment := findCommentByID(targetID, commentsArr, *commentsCount)
@@ -176,8 +177,46 @@ func editComment(commentsArr *arrComments, commentsCount *int, originalOrderArr 
 		if originalComment != nil {
 			originalOrderArr[indexInOriginal] = *targetComment
 		}
-		fmt.Println("Komentar telah berhasil di-update.")
+		fmt.Printf("Komentar dengan ID %d telah berhasil di-update.\n", targetID)
 	} else {
 		fmt.Println("Tidak ada perubahan yang dibuat.")
 	}
+}
+
+func deleteComment(commentsArr *arrComments, commentsCount *int, originalOrderArr *arrComments, originalOrderCount *int) {
+	fmt.Println("\n --- Delete Comment ---")
+	
+	if *commentsCount == 0 {
+		fmt.Println("Tidak ada komentar untuk dihapus.")
+	}
+
+	var targetID int
+	fmt.Print("Masukkan ID komentar yang akan dihapus: ")
+	fmt.Scanln(&targetID)
+
+	indexInComments, commentFound := findCommentByID(targetID, originalOrderArr, *originalOrderCount)
+	if commentFound == nil {
+		fmt.Printf("Komentar dengan ID %d tidak ditemukan.\n", targetID)
+		return
+	}
+
+	for i := indexInComments; i < *commentsCount-1; i++ {
+		commentsArr[*commentsCount-1] = comment{}
+	}
+	if *commentsCount > 0 {
+		commentsArr[*commentsCount-1] = comment{}
+	}
+	(*commentsCount)--
+
+	indexInOriginal, originalCommentFound := findCommentByID(targetID, originalOrderArr, *originalOrderCount)
+	if originalCommentFound != nil {
+		for i := indexInOriginal; i < *originalOrderCount-1; i++ {
+			originalOrderArr[i] = originalOrderArr[i+1]
+		}
+		if *originalOrderCount > 0 {
+			originalOrderArr[*originalOrderCount-1] = comment{}
+		}
+		(*originalOrderCount)--
+	}
+	fmt.Printf("Komentar dengan ID %d telah berhasil dihapus.\n", targetID)
 }
