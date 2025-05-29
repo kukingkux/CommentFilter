@@ -17,13 +17,13 @@ func statusToString(status int) string {
 	}
 }
 
-func getStringInput(prompt string, reader *bufio.Reader) string {
+func getStringInput(prompt string, r *bufio.Reader) string {
 	fmt.Print(prompt)
-	input, _ := reader.ReadString('\n')
+	input, _ := r.ReadString('\n')
 	return strings.TrimSpace(input)
 }
 
-func insertionSort(data *arrComments, count int, field string, ascending bool) {
+func insertionSort(data *arrComments, count int, field string, asc bool) {
 	if count <= 1 {
 		return
 	}
@@ -56,7 +56,7 @@ func insertionSort(data *arrComments, count int, field string, ascending bool) {
 					return
 			}
 
-			if ascending {
+			if asc {
 				if compareResult == -1 {
 					data[j+1] = data[j]
 					j--

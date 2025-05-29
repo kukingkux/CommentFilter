@@ -7,7 +7,7 @@ import (
 
 // Create, Read, Update, Delete (CRUD)
 
-func readCommentsSubMenu(commentsArr *arrComments, commentsCount *int, originalOrderArr *arrComments, originalOrderCount *int, reader *bufio.Reader) {
+func readCommentsSubMenu(commentsArr *arrComments, commentsCount *int, originalOrderArr *arrComments, originalOrderCount *int, r *bufio.Reader) {
 	var (
 		displayArr arrComments
 		displayCount int
@@ -92,7 +92,7 @@ func readCommentsSubMenu(commentsArr *arrComments, commentsCount *int, originalO
 			}
 		case 7: // Search comments
 			if *commentsCount > 0 {
-				searchComments(commentsArr, *commentsCount, reader, &searchResultArr, &searchResultCount)
+				searchComments(commentsArr, *commentsCount, r, &searchResultArr, &searchResultCount)
 			} else {
 				fmt.Println("Tidak ada komentar.")
 			}
@@ -102,4 +102,121 @@ func readCommentsSubMenu(commentsArr *arrComments, commentsCount *int, originalO
 			fmt.Println("Input tidak valid.")
 		}
 	}
+}
+
+func createComment (commentsArr *arrComments, commentsCount *int, originalOrderArr *arrComments, originalOrderCount *int, nextID *int, r *bufio.Reader) {
+	fmt.Println("\n--- Create New Comment ---")
+
+	sender := getStringInput("Masukkan nama sender: ", r)
+	commentText := getStringInput("Masukkan komentar: ", r)
+
+	newComment := comment{
+		id: *nextID,
+		sender: sender,
+		comments: commentText,
+		status: 0,
+	}
+
+	commentsArr[*commentsCount] = newComment
+	(*commentsCount)++
+
+	originalOrderArr[*originalOrderCount] = newComment
+	(*originalOrderCount)++
+
+	(*nextID)++
+	fmt.Println("Komentar berhasil ditambahkan!")
+	fmt.Printf("ID: %d, Sender: %s, Comment: %s, Status: %s\n",
+		newComment.id, newComment.sender, newComment.comments, statusToString(newComment.status))
+}
+
+func findCommentByID(id int, arr *arrComments, count int) (int, *comment) {
+	for i := 0; i < count; i++ {
+		if arr[i].id == id {
+			return i, &arr[i]
+		}
+	}
+	return -1, nil
+}
+
+func editComment(commentsArr *arrComments, commentsCount *int, originalOrderArr *arrComments, originalOrderCount *int, r *bufio.Reader) {
+	fmt.Println("\n --- Edit Comment ---")
+
+	if *commentsCount == 0 {
+		fmt.Println("Tidak ada komentar untuk diedit.")
+		return
+	}
+
+	var targetID int
+	fmt.Print("Masukkan ID komentar yang akan diedit: ")
+	fmt.Scan(&targetID)
+
+	_, targetComment := findCommentByID(targetID, commentsArr, *commentsCount)
+	if targetComment == nil {
+		fmt.Printf("Komentar dengan ID %d tidak ditemukan.\n", targetID)
+		return
+	}
+
+	fmt.Printf("Mengedit Comment ID: %d (Sender: %s, Status: %s)\n", targetComment.id, targetComment.sender, statusToString(targetComment.status))
+	fmt.Printf("Komentar saat ini: %s\n", targetComment.comments)
+
+	newSender := getStringInput(fmt.Sprintf("Masukkan sender baru (current: %s, press Enter to keep): ", targetComment.sender), r)
+	newCommentText := getStringInput(fmt.Sprintf("Masukkan komentar baru (current: %s, press Enter to keep): ", targetComment.comments), r)
+
+	changed := false
+	if newSender != "" {
+		targetComment.sender = newSender
+		changed = true
+	}
+	if newCommentText != "" {
+		targetComment.comments = newCommentText
+		changed = true
+	}
+
+	if changed {
+		indexInOriginal, originalComment := findCommentByID(targetID, originalOrderArr, *originalOrderCount)
+		if originalComment != nil {
+			originalOrderArr[indexInOriginal] = *targetComment
+		}
+		fmt.Printf("Komentar dengan ID %d telah berhasil di-update.\n", targetID)
+	} else {
+		fmt.Println("Tidak ada perubahan yang dibuat.")
+	}
+}
+
+func deleteComment(commentsArr *arrComments, commentsCount *int, originalOrderArr *arrComments, originalOrderCount *int) {
+	fmt.Println("\n --- Delete Comment ---")
+	
+	if *commentsCount == 0 {
+		fmt.Println("Tidak ada komentar untuk dihapus.")
+	}
+
+	var targetID int
+	fmt.Print("Masukkan ID komentar yang akan dihapus: ")
+	fmt.Scanln(&targetID)
+
+	indexInComments, commentFound := findCommentByID(targetID, originalOrderArr, *originalOrderCount)
+	if commentFound == nil {
+		fmt.Printf("Komentar dengan ID %d tidak ditemukan.\n", targetID)
+		return
+	}
+
+	for i := indexInComments; i < *commentsCount-1; i++ {
+		commentsArr[*commentsCount-1] = comment{}
+	}
+	if *commentsCount > 0 {
+		commentsArr[*commentsCount-1] = comment{}
+	}
+	(*commentsCount)--
+
+	indexInOriginal, originalCommentFound := findCommentByID(targetID, originalOrderArr, *originalOrderCount)
+	if originalCommentFound != nil {
+		for i := indexInOriginal; i < *originalOrderCount-1; i++ {
+			originalOrderArr[i] = originalOrderArr[i+1]
+		}
+		if *originalOrderCount > 0 {
+			originalOrderArr[*originalOrderCount-1] = comment{}
+		}
+		(*originalOrderCount)--
+	}
+	fmt.Printf("Komentar dengan ID %d telah berhasil dihapus.\n", targetID)
 }
