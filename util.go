@@ -23,6 +23,16 @@ func getStringInput(prompt string, r *bufio.Reader) string {
 	return strings.TrimSpace(input)
 }
 
+func getFirstNWords(text string, n int) string {
+	words := strings.Fields(text)
+	if len(words) <= n {
+		return text
+	}
+
+	return strings.Join(words[:n], " ")
+}
+
+
 func insertionSort(data *arrComments, count int, field string, asc bool) {
 	if count <= 1 {
 		return
