@@ -157,4 +157,27 @@ func editComment(commentsArr *arrComments, commentsCount *int, originalOrderArr 
 
 	fmt.Printf("Mengedit Comment ID: %d (Sender: %s, Status: %s)\n", targetComment.id, targetComment.sender, statusToString(targetComment.status))
 	fmt.Printf("Komentar saat ini: %s\n", targetComment.comments)
+
+	newSender := getStringInput(fmt.Sprintf("Masukkan sender baru (current: %s, press Enter to keep): ", targetComment.sender), r)
+	newCommentText := getStringInput(fmt.Sprintf("Masukkan komentar baru (current: %s, press Enter to keep): ", targetComment.comments), r)
+
+	changed := false
+	if newSender != "" {
+		targetComment.sender = newSender
+		changed = true
+	}
+	if newCommentText != "" {
+		targetComment.comments = newCommentText
+		changed = true
+	}
+
+	if changed {
+		indexInOriginal, originalComment := findCommentByID(targetID, originalOrderArr, *originalOrderCount)
+		if originalComment != nil {
+			originalOrderArr[indexInOriginal] = *targetComment
+		}
+		fmt.Println("Komentar telah berhasil di-update.")
+	} else {
+		fmt.Println("Tidak ada perubahan yang dibuat.")
+	}
 }
