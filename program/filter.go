@@ -86,7 +86,7 @@ func analyzeCommentSentiment(
 	return finalStatus, totalSentimenScore
 }
 
-func reviewAllNeutralComments(
+func reviewComments(
 	commentsArr *arrComments, commentsCount *int,
 	originalOrderArr *arrComments, originalOrderCount *int,
 	posKeywords *arrPKeywords, posKeywordsCount int,
@@ -102,7 +102,7 @@ func reviewAllNeutralComments(
 	for i := 0; i < *commentsCount; i++ {
 		analyzedCount++
 		originalStatus := commentsArr[i].status
-		newStatus, score := analyzeCommentSentiment(commentsArr[i].comments,
+		newStatus, score := analyzeCommentSentiment(commentsArr[i].text,
 			posKeywords, posKeywordsCount,
 			negKeywords, negKeywordsCount,
 			negationWords, negationWordsCount,
@@ -114,7 +114,7 @@ func reviewAllNeutralComments(
 			commentsArr[i].status = newStatus
 			changedCount++
 			fmt.Printf("Comment ID %d: Text=\"%s...\", Old Status: %s, New Status: %s, Score: %.2f\n",
-				commentsArr[i].id, getFirstNWords(commentsArr[i].comments, 5), statusToString(originalStatus),
+				commentsArr[i].id, getFirstNWords(commentsArr[i].text, 5), statusToString(originalStatus),
 				statusToString(newStatus), score)
 
 			idxInOriginal, originalComment := findCommentByID(commentsArr[i].id, originalOrderArr, *originalOrderCount)

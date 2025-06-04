@@ -86,7 +86,7 @@ func readCommentsSubMenu(commentsArr *arrComments, commentsCount *int, originalO
 				copy(commentsArr[:countToCopy], originalOrderArr[:countToCopy])
 				*commentsCount = countToCopy
 				
-				fmt.Println("Main comment list telah di-reset ke urutan default")
+				fmt.Println("\nMain comment list telah di-reset ke urutan default")
 			} else {
 				fmt.Println("Tidak ada komentar untuk diurutkan.")
 			}
@@ -104,7 +104,7 @@ func readCommentsSubMenu(commentsArr *arrComments, commentsCount *int, originalO
 	}
 }
 
-func createComment (commentsArr *arrComments, commentsCount *int, originalOrderArr *arrComments, originalOrderCount *int, nextID *int, r *bufio.Reader) {
+func createComment(commentsArr *arrComments, commentsCount *int, originalOrderArr *arrComments, originalOrderCount *int, nextID *int, r *bufio.Reader) {
 	fmt.Println("\n--- Create New Comment ---")
 
 	sender := getStringInput("Masukkan nama sender: ", r)
@@ -113,7 +113,7 @@ func createComment (commentsArr *arrComments, commentsCount *int, originalOrderA
 	newComment := comment{
 		id: *nextID,
 		sender: sender,
-		comments: commentText,
+		text: commentText,
 		status: 0,
 	}
 
@@ -126,7 +126,7 @@ func createComment (commentsArr *arrComments, commentsCount *int, originalOrderA
 	(*nextID)++
 	fmt.Println("Komentar berhasil ditambahkan!")
 	fmt.Printf("ID: %d, Sender: %s, Comment: %s, Status: %s\n",
-		newComment.id, newComment.sender, newComment.comments, statusToString(newComment.status))
+		newComment.id, newComment.sender, newComment.text, statusToString(newComment.status))
 }
 
 func findCommentByID(id int, arr *arrComments, count int) (int, *comment) {
@@ -157,10 +157,10 @@ func editComment(commentsArr *arrComments, commentsCount *int, originalOrderArr 
 	}
 
 	fmt.Printf("Mengedit Comment ID: %d (Sender: %s, Status: %s)\n", targetComment.id, targetComment.sender, statusToString(targetComment.status))
-	fmt.Printf("Komentar saat ini: %s\n", targetComment.comments)
+	fmt.Printf("Komentar saat ini: %s\n", targetComment.text)
 
 	newSender := getStringInput(fmt.Sprintf("Masukkan sender baru (current: %s, press Enter to keep): ", targetComment.sender), r)
-	newCommentText := getStringInput(fmt.Sprintf("Masukkan komentar baru (current: %s, press Enter to keep): ", targetComment.comments), r)
+	newCommentText := getStringInput(fmt.Sprintf("Masukkan komentar baru (current: %s, press Enter to keep): ", targetComment.text), r)
 
 	changed := false
 	if newSender != "" {
@@ -168,7 +168,7 @@ func editComment(commentsArr *arrComments, commentsCount *int, originalOrderArr 
 		changed = true
 	}
 	if newCommentText != "" {
-		targetComment.comments = newCommentText
+		targetComment.text = newCommentText
 		changed = true
 	}
 
@@ -218,5 +218,5 @@ func deleteComment(commentsArr *arrComments, commentsCount *int, originalOrderAr
 		}
 		(*originalOrderCount)--
 	}
-	fmt.Printf("Komentar dengan ID %d telah berhasil dihapus.\n", targetID)
+	fmt.Printf("Komentar dengan ID %d telah berhasil dihapus.", targetID)
 }

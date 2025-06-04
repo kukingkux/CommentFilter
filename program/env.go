@@ -3,7 +3,7 @@ package main
 type comment struct {
 	id int
 	sender string
-	comments string
+	text string
 	status int
 }
 
