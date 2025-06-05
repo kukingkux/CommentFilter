@@ -5,6 +5,7 @@ type comment struct {
 	sender string
 	text string
 	status int
+	isHidden bool
 }
 
 type keywordScore struct {

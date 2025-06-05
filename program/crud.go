@@ -104,6 +104,20 @@ func readCommentsSubMenu(commentsArr *arrComments, commentsCount *int, originalO
 	}
 }
 
+func displayComments(commentsList *arrComments, count int) {
+	if len(commentsList) == 0 {
+		fmt.Println("Tidak ada komentar.")
+		return
+	}
+
+	fmt.Println("\n--- List Komentar ---")
+	for i := 0; i < count; i++{
+		c := commentsList[i]
+		fmt.Printf("ID: %d, Sender: %s, Status: %s\nComment: %s\n------------------------\n",
+			c.id, c.sender, statusToString(c.status), c.text)
+	}
+}
+
 func createComment(commentsArr *arrComments, commentsCount *int, originalOrderArr *arrComments, originalOrderCount *int, nextID *int, r *bufio.Reader) {
 	fmt.Println("\n--- Create New Comment ---")
 
@@ -115,6 +129,7 @@ func createComment(commentsArr *arrComments, commentsCount *int, originalOrderAr
 		sender: sender,
 		text: commentText,
 		status: 0,
+		isHidden: false,
 	}
 
 	commentsArr[*commentsCount] = newComment
@@ -148,7 +163,7 @@ func editComment(commentsArr *arrComments, commentsCount *int, originalOrderArr 
 
 	var targetID int
 	fmt.Print("Masukkan ID komentar yang akan diedit: ")
-	fmt.Scan(&targetID)
+	fmt.Scanln(&targetID)
 
 	_, targetComment := findCommentByID(targetID, commentsArr, *commentsCount)
 	if targetComment == nil {

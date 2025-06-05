@@ -6,8 +6,6 @@ import (
 	"os"
 )
 
-
-
 type arrComments [NMAX]comment
 type arrPKeywords [MAX_P_KEYWORDS]keywordScore
 type arrNKeywords [MAX_N_KEYWORDS]keywordScore
@@ -39,19 +37,19 @@ func main() {
 	var nextCommentID int = 10
 
 	dataComments = arrComments{
-		{id: 1, sender: "Gus", text: "Yo: Gurt", status: 0},
-		{id: 2, sender: "Gus", text: "Mul: Yo\nYo: No 😂✌️", status: 0},
-		{id: 3, sender: "Gus", text: "Gurt: Yo", status: 0},
-		{id: 4, sender: "Gus", text: "Gurt: Yo", status: 0},
-		{id: 5, sender: "Gus", text: "Gurt: Yo", status: 0},
-		{id: 6, sender: "Gus", text: "Jelek sekali", status: 0},
-		{id: 7, sender: "Gus", text: "Gurt: Yo", status: 0},
-		{id: 8, sender: "Gus", text: "Gurt: Yo", status: 0},
-		{id: 9, sender: "Gus", text: "Gurt: Yo", status: 0},
+		{id: 2, sender: "Fufu", text: "Mul: Yo\nYo: No 😂✌️", status: 0},
+		{id: 5, sender: "Mulyo", text: "Saya senang dengan fufu namun saya kecewa dengan fafa", status: 0},
+		{id: 3, sender: "Akira", text: "Gurt: Sygau 🥀", status: 0},
+		{id: 6, sender: "Akira", text: "Jelek sekali", status: 0},
+		{id: 1, sender: "Gus", text: "Yo: Gurt, lu keren parah tapi ga nonchalant", status: 0},
+		{id: 8, sender: "Ye", text: "Kanye luar biasa baik kepadaku", status: 0},
+		{id: 4, sender: "Gus", text: "Yang dia lakukan sangat pintar tapi juga berbahaya", status: 0},
+		{id: 9, sender: "Kanye", text: "Gurt: Yo", status: 0},
+		{id: 7, sender: "Kanye", text: "NYOKAP GUA DIRUMAH MASAK PEPES TAHU 🗣️ 🗣️ 🔥🔥🔥🔥🔥🔥", status: 0},
 	}
 	commentsCount = 9
 
-	originalCommentsCount= commentsCount
+	originalCommentsCount = commentsCount
 	for i := 0; i < originalCommentsCount; i++ {
 		originalDataComments[i] = dataComments[i]
 	}
@@ -65,8 +63,9 @@ func main() {
 		{word: "hebat", score: 4},
 		{word: "mantap", score: 3},
 		{word: "keren", score: 3},
+		{word: "pintar", score: 3},
 	}
-	posKeywordCount = 8
+	posKeywordCount = 9
 
 	dataNKeywords = arrNKeywords{
 		{word: "buruk", score: -3},
@@ -77,8 +76,9 @@ func main() {
 		{word: "menyedihkan", score: -4},
 		{word: "masalah", score: -2},
 		{word: "tidak suka", score: -4},
+		{word: "berbahaya", score: -3},
 	}
-	negKeywordCount = 8
+	negKeywordCount = 9
 
 	dataNegationWords = arrNegationWords{
 		"tidak",
@@ -118,7 +118,7 @@ func main() {
 		fmt.Print("Masukkan pilihan: ")
 
 		input := 0
-		fmt.Scan(&input)
+		fmt.Scanln(&input)
 		switch input {
 		case 1:
 			fmt.Println("\nMenuju ke Manage Komentar~")
@@ -172,22 +172,6 @@ func manageCommentsMenu(commentsArr *arrComments, commentsCount *int, originalOr
 		fmt.Println()
 	}
 }
-
-func displayComments(commentsList *arrComments, count int) {
-	if len(commentsList) == 0 {
-		fmt.Println("Tidak ada komentar.")
-		return
-	}
-
-	fmt.Println("\n--- List Komentar ---")
-	for i := 0; i < count; i++{
-		c := commentsList[i]
-		fmt.Printf("ID: %d, Sender: %s, Status: %s\nComment: %s\n------------------------\n",
-			c.id, c.sender, statusToString(c.status), c.text)
-	}
-}
-
-
 
 func showStatistics(commentsArr *arrComments, commentsCount int) {
 	fmt.Println("\n--- Statistik Komentar---")
