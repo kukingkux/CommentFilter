@@ -34,7 +34,7 @@
 
 ## How to use
 
-Go to directory (C:/.../program/) then run below commands in the terminal/console.
+Go to directory ([Parent]/.../program/) then run below commands in the terminal/console.
 
 ```bash
 make run
