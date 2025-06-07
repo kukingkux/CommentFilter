@@ -8,6 +8,9 @@ import (
 
 // Create, Read, Update, Delete (CRUD)
 
+// readCommentsSubMenu() menampilkan menu untuk read
+// sorting dan searching
+// menggunakan pointer untuk array dari komentar dan counter-nya
 func readCommentsSubMenu(commentsArr *arrComments, commentsCount *int, r *bufio.Reader) {
 	var (
 		displayArr arrComments
@@ -94,6 +97,9 @@ func readCommentsSubMenu(commentsArr *arrComments, commentsCount *int, r *bufio.
 	}
 }
 
+// displayComments() akan menampilkan data komentar
+// hanya menampilkan komentar dengan properti isHidden: false
+// menggunakan pointer untuk array komentar
 func displayComments(commentsList *arrComments, count int) {
 	if len(commentsList) == 0 {
 		fmt.Println("Tidak ada komentar.")
@@ -111,6 +117,10 @@ func displayComments(commentsList *arrComments, count int) {
 	}
 }
 
+// createComment() merupakan prosedur create sehingga user dapat menambahkan komentar
+// menambahkan komentar dengan Unique ID, status: netral, dan isHidden: false
+// menggunakan pointer untuk array komentar
+// menggunakan bufio.Reader sebagai input
 func createComment(commentsArr *arrComments, commentsCount *int, nextID *int, r *bufio.Reader) {
 	fmt.Println("\n--- Create New Comment ---")
 
@@ -135,6 +145,9 @@ func createComment(commentsArr *arrComments, commentsCount *int, nextID *int, r 
 		newComment.id, newComment.sender, newComment.text, statusToString(newComment.status))
 }
 
+// findCommentByID() meruopakan prosedur untuk mencari komentar dengan ID sebagai referensi
+// return index dan pointer dari komentar yang ditemukan
+// jika komentar tidak ditemukan maka return -1 dan nil
 func findCommentByID(id int, arr *arrComments, count int) (int, *comment) {
 	for i := 0; i < count; i++ {
 		if arr[i].id == id {
@@ -144,6 +157,8 @@ func findCommentByID(id int, arr *arrComments, count int) (int, *comment) {
 	return -1, nil
 }
 
+// editComment() membiarkan user untuk meng-edit komentar
+// mencari komentar berdasarkan ID dan akan update komentar
 func editComment(commentsArr *arrComments, commentsCount *int, r *bufio.Reader) {
 	fmt.Println("\n --- Edit Comment ---")
 
@@ -176,6 +191,8 @@ func editComment(commentsArr *arrComments, commentsCount *int, r *bufio.Reader) 
 	}
 }
 
+// deleteComment() membiarkan user untuk hapus komentar
+// delete komentar berdasarkan ID
 func deleteComment(commentsArr *arrComments, commentsCount *int) {
 	fmt.Println("\n --- Delete Comment ---")
 	
@@ -204,6 +221,10 @@ func deleteComment(commentsArr *arrComments, commentsCount *int) {
 	fmt.Printf("Komentar dengan ID %d telah berhasil dihapus.", targetID)
 }
 
+// searchComments() mencari komentar berdasarkan kata kunci. Sender, Comment Text, dan Status
+// menggunakan algoritma sequential search
+// menggunakan array komentar, bufio.Reader untuk input dan pointer untuk hasil array dan counternya
+// hasil array akan disimpan dalam resultDisplayArr
 func searchComments(sourceArr *arrComments, sourceCount int, r *bufio.Reader, resultsDisplayArr *arrComments, resultsDisplayCount *int) {
 	var (
 		choiceSearch int
@@ -314,6 +335,10 @@ func searchComments(sourceArr *arrComments, sourceCount int, r *bufio.Reader, re
 	}
 }
 
+// setVisibility() menampilkan menu untuk mengubah visibility menjadi show atau hidden secara manual
+// menampilkan list komentar dengan status dan visibility
+// dapat mengupdate komentar berdasarkan ID
+// function akan terus berjalan hingga user tekan tombol "skip"
 func setVisibility(commentsArr *arrComments, commentsCount int) {
 	for {
 		fmt.Println("\n--- Atur Visibilitas Komentar (Tampilkan/Sembunyikan) ---")

@@ -5,6 +5,11 @@ import (
 	"strings"
 )
 
+// analyzeCommentSentiment() menghitung skor sentimen berdasarkan string teks.
+// memecah input teks, kemudian cek bobot kata positif dan negatif
+// dan mengatur skor berdasarkan kata tambahan negation, intensifier, atau diminisher
+// return status yg telah ditentukan sentimennya (1 untuk positif dan -1 untuk negatif)
+// dan skor dari sentimen
 func analyzeCommentSentiment(
 	commentText string,
 	posKeywords *arrPKeywords, posKeywordsCount int,
@@ -82,6 +87,10 @@ func analyzeCommentSentiment(
 	return finalStatus, totalSentimenScore
 }
 
+// reviewComments() cek komentar secara otomatis
+// cek keseluruhan array satu-per-satu mencari komentar dengan status netral
+// kemudian memanggil analyzeCommentSentimen() untuk menentukan nilai status yang baru
+// setelah review otomatis, user secara manual dapat menentukan komentar negatif untuk disembunyikan
 func reviewComments(
 	commentsArr *arrComments, commentsCount *int,
 	posKeywords *arrPKeywords, posKeywordsCount int,

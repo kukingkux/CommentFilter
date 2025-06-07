@@ -133,6 +133,8 @@ func main() {
 	}
 }
 
+// manageCommentsMenu() digunaka untuk menampilkan sub-menu manage komentar
+// akan terus looping hingga user memilih kembali ke main menu
 func manageCommentsMenu(commentsArr *arrComments, commentsCount *int, nextID *int) {
 	r := bufio.NewReader(os.Stdin)
 	for {
@@ -167,6 +169,9 @@ func manageCommentsMenu(commentsArr *arrComments, commentsCount *int, nextID *in
 	}
 }
 
+// showStatistics() menghitung dan menampilkan statistik komentar
+// menampilkan jumlah komentar dan statusnya serta
+// persentase per-kategori status (positif, negatif, netral)
 func showStatistics(commentsArr *arrComments, commentsCount int) {
 	fmt.Println("\n--- Statistik Komentar---")
 

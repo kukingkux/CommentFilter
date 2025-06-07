@@ -6,6 +6,9 @@ import (
 	"strings"
 )
 
+// insertionSort() mengurutkan array komentar secara ascending atau descending
+// dapat menyorting berdasarkan id atau sender
+// membutuhkan array komentar, jumlah data, field/properti untuk di-sort, dan boolean untuk ascending (true) atau descending (false)
 func insertionSort(data *arrComments, count int, field string, asc bool) {
 	if count <= 1 {
 		return
@@ -59,6 +62,7 @@ func insertionSort(data *arrComments, count int, field string, asc bool) {
 	}
 }
 
+// statusToString() mengubah status (int) menjadi string ("positive"/"negative"/"neutral")
 func statusToString(status int) string {
 	switch status {
 	case 1:
@@ -70,6 +74,7 @@ func statusToString(status int) string {
 	}
 }
 
+// isHiddenToString() mengubah isHidden (bool) menjadi string ("Hidden"/"Show")
 func isHiddenToString(isHidden bool) string {
 	switch isHidden {
 	case true:
@@ -81,12 +86,15 @@ func isHiddenToString(isHidden bool) string {
 	}
 }
 
+// getStringInput() menampilkan prompt kepada user yang membaca seluruh baris teks
+// termasuk spasi dan return berupa string yang telah dipangkas
 func getStringInput(prompt string, r *bufio.Reader) string {
 	fmt.Print(prompt)
 	input, _ := r.ReadString('\n')
 	return strings.TrimSpace(input)
 }
 
+// getFirstNWords mengembalikan string pertama sejumlah N
 func getFirstNWords(text string, n int) string {
 	words := strings.Fields(text)
 	if len(words) <= n {
