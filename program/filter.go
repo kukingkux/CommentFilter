@@ -23,20 +23,18 @@ func analyzeCommentSentiment(
 		wordScore := 0.0
 		isSentimenWord := false
 
-		for k := 0; k < posKeywordsCount; k++ {
+		for k := 0; k < posKeywordsCount && !isSentimenWord; k++ {
 			if currentWord == posKeywords[k].word {
 				wordScore = float64(posKeywords[k].score)
 				isSentimenWord = true
-				break
 			}
 		}
 
 		if !isSentimenWord {
-			for k := 0; k < negKeywordsCount; k++ {
+			for k := 0; k < negKeywordsCount && !isSentimenWord; k++ {
 				if currentWord == negKeywords[k].word {
 					wordScore = float64(negKeywords[k].score)
 					isSentimenWord = true
-					break
 				}
 			}
 		}
@@ -45,30 +43,28 @@ func analyzeCommentSentiment(
 			previousWord := words[i-1]
 			modifierApplied := false
 
-			for k := 0; k < negationWordsCount; k++ {
+			for k := 0; k < negationWordsCount && !modifierApplied; k++ {
 				if previousWord == negationWords[k] {
 					wordScore *= -1.0
 					modifierApplied = true
-					break
 				}
 			}
 
 			if !modifierApplied {
-				for k := 0; k < intensifierCount; k++ {
+				for k := 0; k < intensifierCount && !modifierApplied; k++ {
 					if previousWord == intensifiers[k].word {
 						wordScore *= intensifiers[k].multiplier
 						modifierApplied = true
-						break
 					}
 				}
 			}
 
 			if !modifierApplied {
-				for k := 0; k < diminisherWordCount; k++ {
+				var diminisherFound bool = false
+				for k := 0; k < diminisherWordCount && !diminisherFound; k++ {
 					if previousWord == diminishers[k].word {
 						wordScore *= diminishers[k].multiplier
-						modifierApplied = true
-						break
+						diminisherFound = true
 					}
 				}
 			}
@@ -98,6 +94,7 @@ func reviewComments(
 	analyzedCount := 0
 	changedCount := 0
 
+	insertionSort(commentsArr, *commentsCount, "id", true)
 	for i := 0; i < *commentsCount; i++ {
 		if commentsArr[i].status == 0 {
 			analyzedCount++

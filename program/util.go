@@ -70,6 +70,17 @@ func statusToString(status int) string {
 	}
 }
 
+func isHiddenToString(isHidden bool) string {
+	switch isHidden {
+	case true:
+		return "Hidden"
+	case false:
+		return "Show"
+	default:
+		return "Not Valid."
+	}
+}
+
 func getStringInput(prompt string, r *bufio.Reader) string {
 	fmt.Print(prompt)
 	input, _ := r.ReadString('\n')

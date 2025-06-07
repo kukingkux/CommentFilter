@@ -103,8 +103,11 @@ func displayComments(commentsList *arrComments, count int) {
 	fmt.Println("\n--- List Komentar ---")
 	for i := 0; i < count; i++{
 		c := commentsList[i]
-		fmt.Printf("ID: %d, Sender: %s, Status: %s\nComment: %s\n------------------------\n",
+		if !c.isHidden {
+			fmt.Printf("ID: %d, Sender: %s, Status: %s\nComment: %s\n------------------------\n",
 			c.id, c.sender, statusToString(c.status), c.text)
+		}
+		
 	}
 }
 
@@ -319,13 +322,8 @@ func setVisibility(commentsArr *arrComments, commentsCount int) {
 		for i := 0; i < commentsCount; i++ {
 			c := commentsArr[i]
 			if c.status == -1 {
-				visibilityStatus := "Show"
-				if c.isHidden {
-					visibilityStatus = "Hidden"
-				}
-				
 				fmt.Printf("ID: %d,Sender: %s, Status: %s, Visibility: %s\nComment: %s\n------------------------\n",
-				c.id, statusToString(c.status), visibilityStatus, c.sender, c.text)
+				c.id, c.sender, statusToString(c.status), isHiddenToString(c.isHidden), c.text)
 			}
 		}
 
