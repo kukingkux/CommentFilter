@@ -99,24 +99,28 @@ func reviewComments(
 	changedCount := 0
 
 	for i := 0; i < *commentsCount; i++ {
-		analyzedCount++
-		originalStatus := commentsArr[i].status
-		newStatus, score := analyzeCommentSentiment(commentsArr[i].text,
-			posKeywords, posKeywordsCount,
-			negKeywords, negKeywordsCount,
-			negationWords, negationWordsCount,
-			intensifiers, intensifierCount,
-			diminishers, diminisherWordsCount,
-		)
+		if commentsArr[i].status == 0 {
+			analyzedCount++
+			originalStatus := commentsArr[i].status
+			newStatus, score := analyzeCommentSentiment(commentsArr[i].text,
+				posKeywords, posKeywordsCount,
+				negKeywords, negKeywordsCount,
+				negationWords, negationWordsCount,
+				intensifiers, intensifierCount,
+				diminishers, diminisherWordsCount,
+			)
 
-		if newStatus != originalStatus {
-			commentsArr[i].status = newStatus
-			changedCount++
-			fmt.Printf("Comment ID %d: Text=\"%s...\", Old Status: %s, New Status: %s, Score: %.2f\n",
-				commentsArr[i].id, getFirstNWords(commentsArr[i].text, 5), statusToString(originalStatus),
-				statusToString(newStatus), score)
+			if newStatus != originalStatus {
+				commentsArr[i].status = newStatus
+				changedCount++
+				fmt.Printf("Comment ID %d: Text=\"%s...\", Old Status: %s, New Status: %s, Score: %.2f\n",
+					commentsArr[i].id, getFirstNWords(commentsArr[i].text, 5), statusToString(originalStatus),
+					statusToString(newStatus), score)
+			}
 		}
 	}
+
+	setVisibility(commentsArr, *commentsCount)	
 	fmt.Printf("--- Review Process Complete. Analyzed: %d neutral comments. Status changed for: %d comments. --\n",
 	analyzedCount, changedCount)
 }
