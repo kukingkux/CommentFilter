@@ -235,3 +235,81 @@ func deleteComment(commentsArr *arrComments, commentsCount *int, originalOrderAr
 	}
 	fmt.Printf("Komentar dengan ID %d telah berhasil dihapus.", targetID)
 }
+
+func setVisibility(commentsArr *arrComments, commentsCount int, originalOrderArr *arrComments, originalOrderCount int, r *bufio.Reader) {
+	fmt.Println("\n--- Atur Visibilitas Komentar (Tampilkan/Sembunyikan) ---")
+
+	fmt.Println("Daftar Komentar:")
+	for i := 0; i < commentsCount; i++ {
+		c := commentsArr[i]
+		visibilityStatus := "Show"
+		if c.isHidden {
+			visibilityStatus = "Hidden"
+		}
+
+		fmt.Printf("ID: %d, Status: %s, Visibility: %s, Sender: %s, Komentar \"%s...\"\n",
+			c.id, statusToString(c.status), visibilityStatus, c.sender, getFirstNWords(c.text, 7))
+	}
+	fmt.Println("----------------------------------------------------")
+
+	var toggleID int
+	fmt.Print("Masukkan ID komentar yang visibilitasnya ingin diubah: ")
+	_, err := fmt.Scanln(&toggleID)
+	if err != nil {
+		fmt.Println("Input tidak valid.")
+		return
+	}
+
+	_, toggleComment := findCommentByID(toggleID, commentsArr, commentsCount)
+	if toggleComment == nil {
+		fmt.Printf("Komentar dengan ID %d tidak ditemukan.\n", toggleID)
+		return
+	}
+
+	currentVisibility := "Show"
+	if toggleComment.isHidden {
+		currentVisibility = "Hidden"
+	}
+	fmt.Printf("Komentar ID %d (%s) saat ini %s.\n", toggleComment.id, getFirstNWords(toggleComment.text, 5), currentVisibility)
+	fmt.Println("Pilih aksi:")
+    fmt.Println("1. Tampilkan Komentar (Set Visible)")
+    fmt.Println("2. Sembunyikan Komentar (Set Hidden)")
+    fmt.Println("3. Batal")
+    fmt.Print("Masukkan pilihan: ")
+
+	var choice int
+	_, err = fmt.Scanln(&choice)
+	if err != nil {
+		fmt.Println("Input tidak valid.")
+		return
+	}
+
+	actionTaken := false
+	switch choice {
+	case 1:
+		if toggleComment.isHidden {
+			toggleComment.isHidden = false
+			fmt.Printf("Komentar ID %d sekarang ditampilkan.\n", toggleComment.id)
+			actionTaken = true
+		} else  {
+			fmt.Printf("Komentar ID %d sudah ditampilkan.\n", toggleComment.id)
+		}
+	case 2:
+		if !toggleComment.isHidden {
+			toggleComment.isHidden = true
+			fmt.Printf("Komentar ID %d sekarang disembunyikan.\n", toggleComment.id)
+			actionTaken = true
+		} else  {
+			fmt.Printf("Komentar ID %d sudah disembunyikan.\n", toggleComment.id)
+		}
+	case 3:
+		return
+	default:
+		fmt.Println("Pilihan tidak valid.")
+		return
+	}
+
+	if actionTaken {
+		
+	}
+}
