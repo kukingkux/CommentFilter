@@ -88,7 +88,6 @@ func analyzeCommentSentiment(
 
 func reviewComments(
 	commentsArr *arrComments, commentsCount *int,
-	originalOrderArr *arrComments, originalOrderCount *int,
 	posKeywords *arrPKeywords, posKeywordsCount int,
 	negKeywords *arrNKeywords, negKeywordsCount int,
 	negationWords *arrNegationWords, negationWordsCount int,
@@ -116,11 +115,6 @@ func reviewComments(
 			fmt.Printf("Comment ID %d: Text=\"%s...\", Old Status: %s, New Status: %s, Score: %.2f\n",
 				commentsArr[i].id, getFirstNWords(commentsArr[i].text, 5), statusToString(originalStatus),
 				statusToString(newStatus), score)
-
-			idxInOriginal, originalComment := findCommentByID(commentsArr[i].id, originalOrderArr, *originalOrderCount)
-			if originalComment != nil {
-				originalOrderArr[idxInOriginal].status = newStatus
-			}
 		}
 	}
 	fmt.Printf("--- Review Process Complete. Analyzed: %d neutral comments. Status changed for: %d comments. --\n",

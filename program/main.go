@@ -16,7 +16,6 @@ type arrDiminisherWords [MAX_DIMINISHER_WORDS]modifierWord
 func main() {
 	var (
 		dataComments arrComments
-		originalDataComments arrComments
 		dataPKeywords arrPKeywords
 		dataNKeywords arrNKeywords
 		dataNegationWords arrNegationWords
@@ -26,7 +25,6 @@ func main() {
 
 	var (
 		commentsCount int
-		originalCommentsCount int
 		posKeywordCount int
 		negKeywordCount int
 		negationWordCount int
@@ -48,11 +46,6 @@ func main() {
 		{id: 7, sender: "Kanye", text: "NYOKAP GUA DIRUMAH MASAK PEPES TAHU 🗣️ 🗣️ 🔥🔥🔥🔥🔥🔥", status: 0},
 	}
 	commentsCount = 9
-
-	originalCommentsCount = commentsCount
-	for i := 0; i < originalCommentsCount; i++ {
-		originalDataComments[i] = dataComments[i]
-	}
 
 	dataPKeywords = arrPKeywords{
 		{word: "bagus", score: 3},
@@ -122,13 +115,14 @@ func main() {
 		switch input {
 		case 1:
 			fmt.Println("\nMenuju ke Manage Komentar~")
-			manageCommentsMenu(&dataComments, &commentsCount, &originalDataComments, &originalCommentsCount, &nextCommentID)
+			manageCommentsMenu(&dataComments, &commentsCount, &nextCommentID)
 		case 2:
 			fmt.Println("\nMenuju ke Perlihatkan Statistik Komentar~")
 			showStatistics(&dataComments, commentsCount)
 		case 3:
 			fmt.Println("\nMenuju ke Review Comments~")
-			reviewComments(&dataComments, &commentsCount, &originalDataComments, &originalCommentsCount, &dataPKeywords, posKeywordCount,&dataNKeywords, negKeywordCount,&dataNegationWords, negationWordCount,&dataIntensifierWords, intensifierWordCount, &dataDiminisherWords, diminisherWordCount)
+			reviewComments(&dataComments, &commentsCount, &dataPKeywords, posKeywordCount,&dataNKeywords, 
+				negKeywordCount,&dataNegationWords, negationWordCount,&dataIntensifierWords, intensifierWordCount, &dataDiminisherWords, diminisherWordCount)
 		case 4:
 			fmt.Println("\nExiting program. . . Sampai Bertemu Lagi, Atmin :D")
 			os.Exit(0) // Exits the program
@@ -139,7 +133,7 @@ func main() {
 	}
 }
 
-func manageCommentsMenu(commentsArr *arrComments, commentsCount *int, originalOrderArr *arrComments, originalOrderCount *int, nextID *int) {
+func manageCommentsMenu(commentsArr *arrComments, commentsCount *int, nextID *int) {
 	r := bufio.NewReader(os.Stdin)
 	for {
 		fmt.Println("\nManage Comments")
@@ -157,13 +151,13 @@ func manageCommentsMenu(commentsArr *arrComments, commentsCount *int, originalOr
 
 		switch input {
 		case 1:
-			readCommentsSubMenu(commentsArr, commentsCount, originalOrderArr, originalOrderCount, r)
+			readCommentsSubMenu(commentsArr, commentsCount, r)
 		case 2:
-			createComment(commentsArr, commentsCount, originalOrderArr, originalOrderCount, nextID, r)
+			createComment(commentsArr, commentsCount, nextID, r)
 		case 3:
-			editComment(commentsArr, commentsCount, originalOrderArr, originalOrderCount, r)
+			editComment(commentsArr, commentsCount, r)
 		case 4:
-			deleteComment(commentsArr, commentsCount, originalOrderArr, originalOrderCount)
+			deleteComment(commentsArr, commentsCount)
 		case 5:
 			return
 		default:
