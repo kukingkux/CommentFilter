@@ -35,14 +35,14 @@ func analyzeCommentSentiment(
 			}
 		}
 
-		if !isSentimenWord {
-			for k := 0; k < negKeywordsCount && !isSentimenWord; k++ {
-				if currentWord == negKeywords[k].word {
-					wordScore = negKeywords[k].score
-					isSentimenWord = true
-				}
+		
+		for k := 0; k < negKeywordsCount && !isSentimenWord; k++ {
+			if currentWord == negKeywords[k].word {
+				wordScore = negKeywords[k].score
+				isSentimenWord = true
 			}
 		}
+	
 
 		if isSentimenWord && i > 0 {
 			previousWord := words[i-1]
@@ -106,7 +106,6 @@ func reviewComments(
 	analyzedCount := 0
 	changedCount := 0
 
-	insertionSort(commentsArr, *commentsCount, "id", true)
 	for i := 0; i < *commentsCount; i++ {
 		if commentsArr[i].status == 0 {
 			analyzedCount++
@@ -122,6 +121,7 @@ func reviewComments(
 			if newStatus != originalStatus {
 				commentsArr[i].status = newStatus
 				changedCount++
+
 				fmt.Printf("%-4d %-12s %-12s %-10.2f \nComment: %s...\n------------------------\n",
 					commentsArr[i].id, statusToString(originalStatus),
 					statusToString(newStatus), score, getFirstNWords(commentsArr[i].text, 5))
@@ -130,7 +130,7 @@ func reviewComments(
 	}
 
 	setVisibility(commentsArr, *commentsCount)	
-	fmt.Printf("--- Review Process Complete. Analyzed: %d neutral comments. Status changed for: %d comments. --\n",
+	fmt.Printf("\n--- Review Process Complete. Analyzed: %d neutral comments. Status changed for: %d comments. ---\n",
 	analyzedCount, changedCount)
 }
 

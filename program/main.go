@@ -37,12 +37,12 @@ func main() {
 	dataComments = arrComments{
 		{id: 2, sender: "Fufu", text: "Mul: Yo\nYo: No 😂✌️", status: 0},
 		{id: 5, sender: "Mulyo", text: "Saya senang dengan fufu namun saya kecewa dengan fafa", status: 0},
-		{id: 3, sender: "Akira", text: "Gurt: Sygau 🥀", status: 0},
-		{id: 6, sender: "Akira", text: "Lukisan ku ini jelek banget, tapi aku tetap bahagia", status: 0},
+		{id: 3, sender: "Akira", text: "Gurt, lukisanmu keren banget", status: 0},
+		{id: 6, sender: "Akira", text: "Yo, ini jelek banget woi", status: 0},
 		{id: 1, sender: "Gus", text: "Yo: Gurt, lu keren parah tapi ga nonchalant", status: 0},
-		{id: 8, sender: "Ye", text: "Kanye sangat baik kepadaku", status: 0},
+		{id: 8, sender: "Ye", text: "kelakuan Kanye sangat buruk", status: 0},
 		{id: 4, sender: "Gus", text: "Yang dia lakukan sangat pintar tapi juga berbahaya", status: 0},
-		{id: 9, sender: "Kanye", text: "Gurt: Yo", status: 0},
+		{id: 9, sender: "Kanye", text: "Hebat bisa bikin beat se keren ini", status: 0},
 		{id: 7, sender: "Kanye", text: "NYOKAP GUA DIRUMAH MASAK PEPES TAHU 🗣️ 🗣️ 🔥🔥🔥🔥🔥🔥", status: 0},
 	}
 	commentsCount = 9
@@ -64,7 +64,7 @@ func main() {
 		{word: "buruk", score: -3},
 		{word: "jelek", score: -3},
 		{word: "benci", score: -4},
-		{word: "kecewa", score: -3},
+		{word: "kecewa", score: -4},
 		{word: "parah", score: -5},
 		{word: "menyedihkan", score: -4},
 		{word: "masalah", score: -2},
