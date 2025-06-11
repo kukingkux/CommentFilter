@@ -30,7 +30,7 @@ func analyzeCommentSentiment(
 
 		for k := 0; k < posKeywordsCount && !isSentimenWord; k++ {
 			if currentWord == posKeywords[k].word {
-				wordScore = float64(posKeywords[k].score)
+				wordScore = posKeywords[k].score
 				isSentimenWord = true
 			}
 		}
@@ -38,7 +38,7 @@ func analyzeCommentSentiment(
 		if !isSentimenWord {
 			for k := 0; k < negKeywordsCount && !isSentimenWord; k++ {
 				if currentWord == negKeywords[k].word {
-					wordScore = float64(negKeywords[k].score)
+					wordScore = negKeywords[k].score
 					isSentimenWord = true
 				}
 			}

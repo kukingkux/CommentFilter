@@ -38,9 +38,9 @@ func main() {
 		{id: 2, sender: "Fufu", text: "Mul: Yo\nYo: No 😂✌️", status: 0},
 		{id: 5, sender: "Mulyo", text: "Saya senang dengan fufu namun saya kecewa dengan fafa", status: 0},
 		{id: 3, sender: "Akira", text: "Gurt: Sygau 🥀", status: 0},
-		{id: 6, sender: "Akira", text: "Jelek sekali", status: 0},
+		{id: 6, sender: "Akira", text: "Lukisan ku ini jelek banget, tapi aku tetap bahagia", status: 0},
 		{id: 1, sender: "Gus", text: "Yo: Gurt, lu keren parah tapi ga nonchalant", status: 0},
-		{id: 8, sender: "Ye", text: "Kanye luar biasa baik kepadaku", status: 0},
+		{id: 8, sender: "Ye", text: "Kanye sangat baik kepadaku", status: 0},
 		{id: 4, sender: "Gus", text: "Yang dia lakukan sangat pintar tapi juga berbahaya", status: 0},
 		{id: 9, sender: "Kanye", text: "Gurt: Yo", status: 0},
 		{id: 7, sender: "Kanye", text: "NYOKAP GUA DIRUMAH MASAK PEPES TAHU 🗣️ 🗣️ 🔥🔥🔥🔥🔥🔥", status: 0},
@@ -52,7 +52,7 @@ func main() {
 		{word: "baik", score: 2},
 		{word: "suka", score: 4},
 		{word: "senang", score: 4},
-		{word: "luar biasa", score: 5},
+		{word: "bahagia", score: 5},
 		{word: "hebat", score: 4},
 		{word: "mantap", score: 3},
 		{word: "keren", score: 3},
@@ -89,8 +89,9 @@ func main() {
 		{word: "amat", multiplier: 1.5},
 		{word: "benar-benar", multiplier: 1.7},
 		{word: "sekali", multiplier: 1.3},
+		{word: "banget", multiplier: 1.3},
 	}
-	intensifierWordCount = 4
+	intensifierWordCount = 5
 
 	dataDiminisherWords = arrDiminisherWords{
 		{word: "agak", multiplier: 0.7},

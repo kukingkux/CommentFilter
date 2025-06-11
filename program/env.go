@@ -10,7 +10,7 @@ type comment struct {
 
 type keywordScore struct {
 	word string
-	score int
+	score float64
 }
 
 type modifierWord struct {
