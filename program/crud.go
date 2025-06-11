@@ -26,10 +26,10 @@ func readCommentsSubMenu(commentsArr *arrComments, commentsCount *int, r *bufio.
 		fmt.Println("\nRead Comments Sub-Menu")
 		fmt.Println("--------------------")
 		fmt.Println("1. Display All Comments (Current Order of main list)")
-		fmt.Println("2. Sort & Display by ID (Ascending) - Selection Sort")
-		fmt.Println("3. Sort & Display by ID (Descending) - Selection Sort")
-		fmt.Println("4. Sort & Display by Sender (Ascending) - Selection Sort")
-		fmt.Println("5. Sort & Display by Sender (Descending) - Selection Sort")
+		fmt.Println("2. Sort & Display by ID (Ascending)")
+		fmt.Println("3. Sort & Display by ID (Descending)")
+		fmt.Println("4. Sort & Display by Sender (Ascending)")
+		fmt.Println("5. Sort & Display by Sender (Descending)")
 		fmt.Println("6. Search Comments (from current main list order)")
 		fmt.Println("7. Back to Manage Comments Menu")
 		fmt.Println("--------------------")
@@ -49,7 +49,7 @@ func readCommentsSubMenu(commentsArr *arrComments, commentsCount *int, r *bufio.
 
 		switch input {
 		case 1:
-			fmt.Println("\n--- Menampilkan Main Comment List ---")
+			fmt.Println("\n=== Menampilkan Main Comment List ===")
 			displayComments(commentsArr, *commentsCount)
 		case 2: // Sort By ID Ascending
 			if displayCount > 0 {
@@ -107,10 +107,12 @@ func displayComments(commentsList *arrComments, count int) {
 	}
 
 	fmt.Println("\n--- List Komentar ---")
+	fmt.Printf("\033[1m%-4s %-12s %-12s\033[0m\n", "ID", "Sender", "Status")
+	fmt.Println("------------------------")
 	for i := 0; i < count; i++{
 		c := commentsList[i]
 		if !c.isHidden {
-			fmt.Printf("ID: %d, Sender: %s, Status: %s\nComment: %s\n------------------------\n",
+			fmt.Printf("%-4d %-12s %-12s\nComment: %-4s\n------------------------\n",
 			c.id, c.sender, statusToString(c.status), c.text)
 		}
 		
@@ -140,9 +142,11 @@ func createComment(commentsArr *arrComments, commentsCount *int, nextID *int, r 
 
 
 	(*nextID)++
-	fmt.Println("Komentar berhasil ditambahkan!")
-	fmt.Printf("ID: %d, Sender: %s, Comment: %s, Status: %s\n",
-		newComment.id, newComment.sender, newComment.text, statusToString(newComment.status))
+	fmt.Println("\n\033[1mKomentar Berhasil Ditambahkan!\033[0m")
+	fmt.Printf("\033[1m%-4s %-12s %-12s\033[0m\n", "ID", "Sender", "Status")
+	fmt.Println("------------------------")
+	fmt.Printf("%-4d %-12s %-12s\nComment: %-4s\n------------------------\n",
+		newComment.id, newComment.sender, statusToString(newComment.status), newComment.text)
 }
 
 // findCommentByID() meruopakan prosedur untuk mencari komentar dengan ID sebagai referensi
@@ -177,7 +181,10 @@ func editComment(commentsArr *arrComments, commentsCount *int, r *bufio.Reader) 
 		return
 	}
 
-	fmt.Printf("Mengedit Comment ID: %d (Sender: %s, Status: %s)\n", targetComment.id, targetComment.sender, statusToString(targetComment.status))
+	fmt.Println("\n\033[1mMengedit\033[0m")
+	fmt.Printf("\033[1m%-4s %-12s %-12s\033[0m\n", "ID", "Sender", "Status")
+	fmt.Println("------------------------")
+	fmt.Printf("%-4d %-12s %-12s\n", targetComment.id, targetComment.sender, statusToString(targetComment.status))
 	fmt.Printf("Komentar saat ini: %s\n", targetComment.text)
 
 	newSender := getStringInput(fmt.Sprintf("Masukkan sender baru (current: %s, press Enter to keep): ", targetComment.sender), r)
@@ -324,10 +331,12 @@ func searchComments(sourceArr *arrComments, sourceCount int, r *bufio.Reader, re
 	}
 
 	if *resultsDisplayCount > 0  {
-		fmt.Println("\n\033[1m--- Hasil Pencarian ---\033[0m")
+		fmt.Println("\n--- Hasil Pencarian ---")
+		fmt.Printf("\033[1m%-4s %-12s %-12s\033[0m\n", "ID", "Sender", "Status")
+		fmt.Println("------------------------")
 		for i := 0; i < *resultsDisplayCount; i++ {
 			res := resultsDisplayArr[i]
-			fmt.Printf("ID: %d, Sender: %s, Status: %s\nComment: %s\n------------------------\n",
+			fmt.Printf("%-4d %-12s %-12s\nComment: %-4s\n------------------------\n",
 				res.id, res.sender, statusToString(res.status), res.text)
 		}
 	} else {
@@ -335,19 +344,21 @@ func searchComments(sourceArr *arrComments, sourceCount int, r *bufio.Reader, re
 	}
 }
 
-// setVisibility() menampilkan menu untuk mengubah visibility menjadi show atau hidden secara manual
+// setVisibility() menampilkan menu untuk mengubah visibility menjadi Visible atau hidden secara manual
 // menampilkan list komentar dengan status dan visibility
 // dapat mengupdate komentar berdasarkan ID
 // function akan terus berjalan hingga user tekan tombol "skip"
 func setVisibility(commentsArr *arrComments, commentsCount int) {
 	for {
-		fmt.Println("\n--- Atur Visibilitas Komentar (Tampilkan/Sembunyikan) ---")
+		fmt.Println("\n=== Atur Visibilitas Komentar (Tampilkan/Sembunyikan) ===")
 
-		fmt.Println("Daftar Komentar:")
+		fmt.Println("\n--- List Komentar ---")
+		fmt.Printf("\033[1m%-4s %-12s %-12s %-12s\033[0m\n", "ID", "Sender", "Status", "Visibility")
+		fmt.Println("-----------------------")
 		for i := 0; i < commentsCount; i++ {
 			c := commentsArr[i]
 			if c.status == -1 {
-				fmt.Printf("ID: %d,Sender: %s, Status: %s, Visibility: %s\nComment: %s\n------------------------\n",
+				fmt.Printf("%-4d %-12s %-12s %-12s\nComment: %s\n------------------------\n",
 				c.id, c.sender, statusToString(c.status), isHiddenToString(c.isHidden), c.text)
 			}
 		}
@@ -365,11 +376,14 @@ func setVisibility(commentsArr *arrComments, commentsCount int) {
 			return
 		}
 
-		currentVisibility := "Show"
+		currentVisibility := "Visible"
 		if toggleComment.isHidden {
 			currentVisibility = "Hidden"
 		}
+
+		fmt.Println("\n-----------------------")
 		fmt.Printf("Komentar ID %d (%s) saat ini %s.\n", toggleComment.id, getFirstNWords(toggleComment.text, 5), currentVisibility)
+		fmt.Println("-----------------------")
 		fmt.Println("Pilih aksi:")
 		fmt.Println("1. Tampilkan Komentar (Set Visible)")
 		fmt.Println("2. Sembunyikan Komentar (Set Hidden)")

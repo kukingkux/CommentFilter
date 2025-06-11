@@ -74,13 +74,13 @@ func statusToString(status int) string {
 	}
 }
 
-// isHiddenToString() mengubah isHidden (bool) menjadi string ("Hidden"/"Show")
+// isHiddenToString() mengubah isHidden (bool) menjadi string ("Hidden"/"Visible")
 func isHiddenToString(isHidden bool) string {
 	switch isHidden {
 	case true:
 		return "Hidden"
 	case false:
-		return "Show"
+		return "Visible"
 	default:
 		return "Not Valid."
 	}

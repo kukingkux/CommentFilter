@@ -99,7 +99,10 @@ func reviewComments(
 	intensifiers *arrIntensifierWords, intensifierCount int,
 	diminishers *arrDiminisherWords, diminisherWordsCount int,
 ) {
-	fmt.Println("\n--- Starting Comment Review Process ---")
+	fmt.Println("\n=== Starting Comment Review Process ===")
+	fmt.Println("\n--- List Komentar ---")
+	fmt.Printf("\033[1m%-4s %-12s %-12s %-10s\033[0m\n", "ID", "Old Status", "New Status", "Score")
+	fmt.Println("-----------------------")
 	analyzedCount := 0
 	changedCount := 0
 
@@ -119,9 +122,9 @@ func reviewComments(
 			if newStatus != originalStatus {
 				commentsArr[i].status = newStatus
 				changedCount++
-				fmt.Printf("Comment ID %d: Text=\"%s...\", Old Status: %s, New Status: %s, Score: %.2f\n",
-					commentsArr[i].id, getFirstNWords(commentsArr[i].text, 5), statusToString(originalStatus),
-					statusToString(newStatus), score)
+				fmt.Printf("%-4d %-12s %-12s %-10.2f \nComment: %s...\n------------------------\n",
+					commentsArr[i].id, statusToString(originalStatus),
+					statusToString(newStatus), score, getFirstNWords(commentsArr[i].text, 5))
 			}
 		}
 	}

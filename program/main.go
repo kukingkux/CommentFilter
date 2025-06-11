@@ -101,7 +101,8 @@ func main() {
 	diminisherWordCount = 4
 
 	for {
-		fmt.Println("\nMain Menu")
+		fmt.Println("\n====================")
+		fmt.Println("Main Menu")
 		fmt.Println("--------------------")
 		fmt.Println("1. Manage Komentar")
 		fmt.Println("2. Perlihatkan Statistik Komentar")
@@ -133,12 +134,13 @@ func main() {
 	}
 }
 
-// manageCommentsMenu() digunaka untuk menampilkan sub-menu manage komentar
+// manageCommentsMenu() digunakan untuk menampilkan sub-menu manage komentar
 // akan terus looping hingga user memilih kembali ke main menu
 func manageCommentsMenu(commentsArr *arrComments, commentsCount *int, nextID *int) {
 	r := bufio.NewReader(os.Stdin)
 	for {
-		fmt.Println("\nManage Comments")
+		fmt.Println("\n====================")
+		fmt.Println("Manage Comments")
 		fmt.Println("--------------------")
 		fmt.Println("1. Read Comments (List, Sort, Search)")
 		fmt.Println("2. Create Comment")
