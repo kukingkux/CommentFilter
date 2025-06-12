@@ -39,5 +39,8 @@ Go to directory ([Parent]/.../program/) then run below commands in the terminal/
 ```bash
 make run
 ```
-
+or (if you don't have Makefile installed)
+```bash
+go run env.go crud.go filter.go util.go main.go
+```
 ###
